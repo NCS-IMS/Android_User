@@ -4,6 +4,8 @@
     <string name="title_findRoad">길찾기</string>
     <string name="title_myPage">내정보</string>
 
+    <string name="kakao_app_key">dafbb22341109472fe400f2f6a9ff0bc</string>
+
     <!-- 증상 -->
     <string name="ㅠㅐ">Home</string>
 </resources>
