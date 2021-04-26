@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -26,16 +27,17 @@ class MypageFragment : Fragment, View.OnClickListener {
         this.editorMode = editorMode
     }
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         mypageViewModel = ViewModelProvider(requireActivity()).get(MypageViewModel::class.java)
         mypageBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage, container, false)
-
         mypageBinding.myPageViewModel = mypageViewModel
         mypageBinding.lifecycleOwner = this
+
+        var bloodType = arrayOf("A형", "B형", "O형", "AB형")
+        var adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, bloodType)
+        mypageBinding.bloodTypeTxt.setAdapter(adapter)
+
+
         userInfoData = UserInfoData(requireContext())
         loadUserInfo()
         if(editorMode){
@@ -59,10 +61,12 @@ class MypageFragment : Fragment, View.OnClickListener {
 
     fun loadUserInfo(){
         var user = userInfoData.getUserData()
+        var gender = ""
         mypageBinding.nameTxt.setText(user.get("NAME"))
         mypageBinding.birthTxt.setText(user.get("BIRTH"))
         mypageBinding.addrTxt.setText(user.get("ADDR"))
-        mypageBinding.genderTxt.setText(user.get("GENDER"))
+        if(user.get("GENDER")=="MALE") gender = "남성" else gender = "여성"
+        mypageBinding.genderTxt.setText(gender)
         mypageBinding.bloodTypeTxt.setText(user.get("BLOOD"))
         mypageBinding.takingMedicineTxt.setText(user.get("MEDICINE"))
         mypageBinding.historyTxt.setText(user.get("HISTORY"))
