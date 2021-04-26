@@ -1,213 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backColor"
-    tools:context=".ui.notifications.MypageFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="myPageViewModel"
+            type="com.ncs.imsUser.ui.notifications.MypageViewModel" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/fragment_boder"
-        android:layout_above="@id/tempView3">
+        android:background="@color/backColor"
+        tools:context=".ui.notifications.MypageFragment">
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/fragment_boder"
+            android:layout_above="@id/tempView3">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:scrollbars="none">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="내정보"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerInParent="true"
-                        android:textSize="17dp"/>
+                        android:layout_margin="15dp">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/icon_edit"
-                        app:tint="@color/sepLine"/>
-                </RelativeLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="내정보"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerInParent="true"
+                            android:textSize="17dp"/>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="10dp"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="10dp">
+                        <ImageView
+                            android:id="@+id/editBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/icon_edit"
+                            app:tint="@color/sepLine"/>
+                        <ImageView
+                            android:id="@+id/saveBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/save_icon"
+                            android:visibility="gone"
+                            app:tint="@color/sepLine"/>
+                    </RelativeLayout>
 
-                    <ImageView
+                    <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/no_image"/>
+                        android:layout_marginVertical="10dp"
+                        app:cardElevation="10dp"
+                        app:cardCornerRadius="10dp">
 
-                </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:id="@+id/profileImg"
+                            android:layout_width="150dp"
+                            android:layout_height="200dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/no_image"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16dp"
-                    android:text="이름"/>
+                    </androidx.cardview.widget.CardView>
 
-                <EditText
-                    android:id="@+id/name_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="10dp"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="7dp"
-                    android:enabled="false"
-                    android:background="@drawable/edit_border"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="16dp"
+                        android:text="이름"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16dp"
-                    android:text="생년월일"/>
+                    <EditText
+                        android:id="@+id/name_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:enabled="false"
+                        android:background="@drawable/edit_border"/>
 
-                <EditText
-                    android:id="@+id/birth_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="10dp"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="7dp"
-                    android:enabled="false"
-                    android:background="@drawable/edit_border"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="16dp"
+                        android:text="생년월일"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16dp"
-                    android:text="주소"/>
+                    <EditText
+                        android:id="@+id/birth_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:enabled="false"
+                        android:background="@drawable/edit_border"/>
 
-                <EditText
-                    android:id="@+id/addr_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="10dp"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="7dp"
-                    android:enabled="false"
-                    android:background="@drawable/edit_border"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="16dp"
+                        android:text="주소"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16dp"
-                    android:text="성별"/>
+                    <EditText
+                        android:id="@+id/addr_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:enabled="false"
+                        android:background="@drawable/edit_border"/>
 
-                <EditText
-                    android:id="@+id/gender_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="10dp"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="7dp"
-                    android:enabled="false"
-                    android:background="@drawable/edit_border"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="16dp"
+                        android:text="성별"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16dp"
-                    android:text="혈액형"/>
+                    <EditText
+                        android:id="@+id/gender_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:enabled="false"
+                        android:background="@drawable/edit_border"/>
 
-                <EditText
-                    android:id="@+id/blood_type_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="10dp"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="7dp"
-                    android:enabled="false"
-                    android:background="@drawable/edit_border"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="16dp"
+                        android:text="혈액형"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16dp"
-                    android:text="복용중인 약"/>
+                    <EditText
+                        android:id="@+id/blood_type_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:enabled="false"
+                        android:background="@drawable/edit_border"/>
 
-                <EditText
-                    android:id="@+id/taking_medicine_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="10dp"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="7dp"
-                    android:enabled="false"
-                    android:gravity="top"
-                    android:background="@drawable/edit_border"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="16dp"
+                        android:text="복용중인 약"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16dp"
-                    android:text="병력정보"/>
+                    <EditText
+                        android:id="@+id/taking_medicine_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:enabled="false"
+                        android:gravity="top"
+                        android:background="@drawable/edit_border"/>
 
-                <EditText
-                    android:id="@+id/history_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="10dp"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="7dp"
-                    android:enabled="false"
-                    android:gravity="top"
-                    android:background="@drawable/edit_border"/>
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="16dp"
+                        android:text="병력정보"/>
 
-        </ScrollView>
+                    <EditText
+                        android:id="@+id/history_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:enabled="false"
+                        android:gravity="top"
+                        android:background="@drawable/edit_border"/>
+                </LinearLayout>
+
+            </ScrollView>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tempView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="?attr/actionBarSize"
-        android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tempView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</layout>

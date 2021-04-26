@@ -15,12 +15,13 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
+import com.ncs.imsUser.SaveDataManager.UserInfoData
 import com.ncs.imsUser.databinding.ActivityLoginBinding
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 class LoginActivity : AppCompatActivity() {
-
+    lateinit var userData: UserInfoData
     var callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if(error != null){
             when{
@@ -54,9 +55,27 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         else if (token != null) {
-            Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            UserApiClient.instance.me { user, error ->
+                if (error != null) {
+                    Log.e("Request Fail", "사용자 정보 요청 실패", error)
+                }
+                else if (user != null) {
+
+                    userData.setUserID(user.id.toString())
+                    userData.setGender(user.kakaoAccount?.gender.toString())
+                    userData.setProfileImg(user.kakaoAccount?.profile!!.profileImageUrl)
+
+                    Log.e("sdfds", userData.getUserData().get("USER_ID").toString())
+
+                    Log.i("Request Success", "사용자 정보 요청 성공" +
+                            "\n회원번호: ${user.id}" +
+                            "\n성별: ${user.kakaoAccount?.gender}")
+
+                    Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+            }
         }
     }
 
@@ -68,12 +87,7 @@ class LoginActivity : AppCompatActivity() {
         //Log.d("KeyHash", getHashKey())
         Log.d("KeyHash", Utility.getKeyHash(this))
 
-        UserApiClient.instance.accessTokenInfo{tokenInfo, error ->
-            if(tokenInfo != null){
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            }
-        }
+        userData = UserInfoData(this)
 
         loginBinding.kakaoLogin.setOnClickListener {
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
