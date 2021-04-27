@@ -1,6 +1,7 @@
 package com.ncs.imsUser.SaveDataManager
 
 import android.content.Context
+import android.util.Log
 import com.pddstudio.preferences.encrypted.EncryptedPreferences
 
 class UserInfoData(context: Context) {

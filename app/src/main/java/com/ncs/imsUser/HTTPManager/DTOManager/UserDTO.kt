@@ -20,5 +20,7 @@ data class UserDTO(
     @SerializedName("email")
     var email : String,
     @SerializedName("age")
-    var age : String
+    var age : String,
+    @SerializedName("message")
+    var message : String
 )

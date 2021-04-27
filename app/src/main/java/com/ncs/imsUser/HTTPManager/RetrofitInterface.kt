@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface RetrofitInterface{
+
     @POST("/user/create")
     fun setUserInfo(@Body data: HashMap<String, String>): Call<UserDTO>
 

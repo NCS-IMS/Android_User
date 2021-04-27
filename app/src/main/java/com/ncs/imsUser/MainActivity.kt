@@ -28,10 +28,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         if(!userData.checkAllDataSave()){
-            Log.e("dfds", "ad2e21321313123213")
             showDialog("추가정보 입력", "추가정보를 입력해야합니다.\n입력페이지로 이동합니다.")
-        }else{
-            Log.e("dfds", "dsfsd")
         }
     }
 
