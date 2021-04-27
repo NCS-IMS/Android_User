@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             .setMessage(message)
             .setPositiveButton("확인", object : DialogInterface.OnClickListener{
                 override fun onClick(dialog: DialogInterface?, which: Int) {
-                    supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, MypageFragment(true)).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, MypageFragment(true, true)).commit()
                     navView.menu.get(2).isChecked = true
                 }
             }).show()

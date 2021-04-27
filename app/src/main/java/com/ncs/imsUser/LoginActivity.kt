@@ -63,6 +63,7 @@ class LoginActivity : AppCompatActivity() {
 
                     userData.setUserID(user.id.toString())
                     userData.setGender(user.kakaoAccount?.gender.toString())
+                    userData.setEmail(user.kakaoAccount?.email.toString())
                     userData.setProfileImg(user.kakaoAccount?.profile!!.profileImageUrl)
 
                     Log.e("sdfds", userData.getUserData().get("USER_ID").toString())

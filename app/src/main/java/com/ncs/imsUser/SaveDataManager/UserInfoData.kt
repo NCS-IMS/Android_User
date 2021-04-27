@@ -16,6 +16,14 @@ class UserInfoData(context: Context) {
         editor.putString("NAME",name)
         return editor.commit()
     }
+    fun setPhone(phone : String):Boolean{
+        editor.putString("PHONE",phone)
+        return editor.commit()
+    }
+    fun setEmail(email : String):Boolean{
+        editor.putString("EMAIL",email)
+        return editor.commit()
+    }
     fun setBirth(birth : String):Boolean{
         editor.putString("BIRTH",birth)
         return editor.commit()
@@ -48,6 +56,7 @@ class UserInfoData(context: Context) {
         val userInfo = HashMap<String, String>()
         userInfo["USER_ID"] = userData.getString("USER_ID", "")
         userInfo["NAME"] = userData.getString("NAME", "")
+        userInfo["PHONE"] = userData.getString("PHONE", "")
         userInfo["BIRTH"] = userData.getString("BIRTH", "")
         userInfo["ADDR"] = userData.getString("ADDR", "")
         userInfo["GENDER"] = userData.getString("GENDER", "")
@@ -55,6 +64,7 @@ class UserInfoData(context: Context) {
         userInfo["MEDICINE"] = userData.getString("MEDICINE", "")
         userInfo["HISTORY"] = userData.getString("HISTORY", "")
         userInfo["IMGURL"] = userData.getString("IMGURL", "")
+        userInfo["EMAIL"] = userData.getString("EMAIL", "")
         return userInfo
     }
 
