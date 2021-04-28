@@ -35,28 +35,19 @@ import java.util.*
 class MypageFragment : Fragment, View.OnClickListener {
 
     var editorMode = false
-    var first = false
+    companion object{
+        var first = false
+    }
     private lateinit var mypageViewModel: MypageViewModel
     lateinit var mypageBinding: FragmentMypageBinding
     lateinit var userInfoData: UserInfoData
     lateinit var userForm : Array<Editable>
-    var gson = GsonBuilder()
-            .setLenient()
-            .create()
-
-    var retrofit = Retrofit.Builder()
-            .baseUrl(Tools().BASE_URL)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-
-    var service: RetrofitInterface = retrofit.create(RetrofitInterface::class.java)
     lateinit var progressDialog:ProgressDialog
 
     constructor()
     constructor(editorMode: Boolean, first: Boolean){
         this.editorMode = editorMode
-        this.first = first
+        MypageFragment.first = first
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -146,34 +137,7 @@ class MypageFragment : Fragment, View.OnClickListener {
             }).show()
     }
 
-    fun InsertUserData(){
-        var gender = if(userForm[4].toString() == "남성") "1" else "0"
-        var year = SimpleDateFormat("yyyy").format(SimpleDateFormat("yyyy.mm.dd").parse(userForm[2].toString()))
 
-        var info = hashMapOf<String, String>(
-                "kakaoId" to userInfoData.getUserData().get("USER_ID").toString(),
-                "name" to userForm[0].toString(),
-                "phone" to userForm[1].toString(),
-                "age" to (Calendar.getInstance()[Calendar.YEAR] - year.toInt()+1).toString(),
-                "address" to userForm[3].toString(),
-                "gender" to gender,
-                "bloodType" to userForm[5].toString(),
-                "imgSrc" to userInfoData.getUserData().get("IMGURL").toString(),
-                "email" to userInfoData.getUserData().get("EMAIL").toString()
-        )
-        service.setUserInfo(info).enqueue(object : Callback<UserDTO>{
-            override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
-                Log.d("Insert State : ", response.body()!!.message)
-                progressDialog.dismiss()
-            }
-
-            override fun onFailure(call: Call<UserDTO>, t: Throwable) {
-                Log.d("error", t.message.toString())
-                progressDialog.dismiss()
-            }
-
-        })
-    }
 
     override fun onClick(v: View?) {
         this.editorMode = !editorMode
@@ -182,15 +146,23 @@ class MypageFragment : Fragment, View.OnClickListener {
                 changeMode()
             }
             mypageBinding.saveBtn.id -> {
-                if (checkFullText()) {
+                progressDialog.setMessage("저장 중 입니다...")
+                progressDialog.setCancelable(false)
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+                progressDialog.show()
+                if (checkFullText()&&first) {
                     saveUserData()
                     changeMode()
-                    progressDialog.setMessage("저장 중 입니다...")
-                    progressDialog.setCancelable(false)
-                    progressDialog .setProgressStyle(ProgressDialog.STYLE_SPINNER)
-                    progressDialog.show()
-                    InsertUserData()
-                }else showDialog("빈칸을 채워주세요", "당장용>.<")
+                    mypageViewModel.InsertUserData(userForm, progressDialog)
+                }else if(checkFullText()&&!first){
+                    Log.e("sf", "sdfsd")
+                    saveUserData()
+                    changeMode()
+                    mypageViewModel.UpdateUserData(userForm, progressDialog)
+                }else{
+                    progressDialog.dismiss()
+                    showDialog("빈칸을 채워주세요", "당장용>.<")
+                }
             }
             mypageBinding.birthTxt.id -> {
                 DatePickerDialog(requireContext(), { view, year, month, dayOfMonth ->
