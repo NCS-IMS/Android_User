@@ -25,8 +25,7 @@ class SymptomDialog(context: Context, var symptomDialogListener: SymptomDialogLi
         sympCardbinding = DataBindingUtil.inflate(inflater, R.layout.symp_card, container, false)
         sympList = SymptomListMaker(0)
         var adapter = SymptomAdapter(requireContext(),sympList){symptomData ->
-            Log.e("a", symptomData.sympName)
-            symptomDialogListener.clickItem(true)
+            symptomDialogListener.clickItem(symptomData.sympName)
             dismiss()
         }
         binding.symptomRecycler.adapter = adapter
@@ -54,6 +53,6 @@ class SymptomDialog(context: Context, var symptomDialogListener: SymptomDialogLi
         return makeList
     }
     interface SymptomDialogListener{
-        fun clickItem(state:Boolean)
+        fun clickItem(state:String)
     }
 }
