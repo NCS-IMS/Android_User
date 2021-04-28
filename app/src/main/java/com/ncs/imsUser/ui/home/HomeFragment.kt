@@ -55,8 +55,8 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener{
                 isMe = true
                 var sympDialog = SymptomDialog(requireContext(), object:SymptomDialog.SymptomDialogListener{
                     override fun clickItem(state: String) {
-                        Log.e("hello", state)
-
+                        var gps = getMylocation.getLocation(requireContext())
+                        homeViewModel.myEmergencyCall(state, isMe, gps)
                     }
                 })
                 sympDialog.show(childFragmentManager, sympDialog.tag)

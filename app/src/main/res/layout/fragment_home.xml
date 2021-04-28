@@ -94,6 +94,20 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.89"/>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/home_guidline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/home_guidline13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75"/>
+
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -147,14 +161,27 @@
 
         <ImageView
             android:id="@+id/call_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:src="@drawable/call_user"
-            android:padding="50dp"
-            android:background="@drawable/call_border"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/call_border_left"
             app:layout_constraintTop_toBottomOf="@id/home_guidline7"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintStart_toStartOf="@id/home_guidline12"/>
+
+        <ImageView
+            android:id="@+id/call_btn2"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/call_user"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/call_border_right"
+            app:layout_constraintTop_toBottomOf="@id/home_guidline7"
+            app:layout_constraintEnd_toStartOf="@id/home_guidline13"/>
 
         <ImageView
             android:layout_width="match_parent"

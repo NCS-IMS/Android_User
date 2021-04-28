@@ -31,7 +31,7 @@ class MypageViewModel(application: Application) : AndroidViewModel(application) 
             .create()
 
     var retrofit = Retrofit.Builder()
-            .baseUrl(Tools().BASE_URL)
+            .baseUrl(Tools().MAIN_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -65,7 +65,6 @@ class MypageViewModel(application: Application) : AndroidViewModel(application) 
                 Log.d("error", t.message.toString())
                 progressDialog.dismiss()
             }
-
         })
     }
 
