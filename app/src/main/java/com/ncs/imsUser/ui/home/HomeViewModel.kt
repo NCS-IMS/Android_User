@@ -73,7 +73,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             override fun onResponse(call: Call<PubicDTO>, response: Response<PubicDTO>) {
                 Log.d("Insert State : ", response.body()!!.message)
             }
-
             override fun onFailure(call: Call<PubicDTO>, t: Throwable) {
                 Log.d("error", t.message.toString())
             }

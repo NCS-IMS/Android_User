@@ -7,14 +7,21 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
+import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
-class GetMylocation {
 
+class GetMylocation {
+    var gps = hashMapOf<String, Double>()
+    var gpsLocationListener = object :LocationListener{
+        override fun onLocationChanged(location: Location) {
+            gps["latitude"] = location.latitude
+            gps["longitude"]  = location.longitude
+        }
+    }
     fun getLocation(context: Context): HashMap<String, Double> {
         var lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var gps = hashMapOf<String, Double>()
         if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(
                 context,
                 android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -26,9 +33,14 @@ class GetMylocation {
             )
         } else {
             val location: Location? = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            gps["longitude"] = location!!.longitude
-            gps["latitude"] = location!!.latitude
+            if (location != null) {
+                gps["latitude"] = location.latitude
+                gps["longitude"]  = location.longitude
+            }
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000L, 1f, gpsLocationListener)
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 1f, gpsLocationListener)
         }
         return gps
     }
+
 }
