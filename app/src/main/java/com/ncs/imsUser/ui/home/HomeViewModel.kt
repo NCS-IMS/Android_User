@@ -59,4 +59,24 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
         })
     }
+
+    fun otherEmergencyCall(state : String, isMe: Boolean, gps : HashMap<String, Double>){
+
+        var info = hashMapOf<String, String>(
+                "kakaoId" to userInfoData.getUserData().get("USER_ID").toString(),
+                "state" to state,
+                "is_self" to if(isMe) "1" else "0",
+                "latitude" to gps["latitude"].toString(),
+                "longitude" to gps["longitude"].toString()
+        )
+        service.sendMyEmergency(info).enqueue(object : Callback<PubicDTO>{
+            override fun onResponse(call: Call<PubicDTO>, response: Response<PubicDTO>) {
+                Log.d("Insert State : ", response.body()!!.message)
+            }
+
+            override fun onFailure(call: Call<PubicDTO>, t: Throwable) {
+                Log.d("error", t.message.toString())
+            }
+        })
+    }
 }

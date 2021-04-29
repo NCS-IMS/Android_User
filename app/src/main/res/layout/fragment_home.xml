@@ -160,24 +160,24 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
-            android:id="@+id/call_btn"
-            android:layout_width="90dp"
+            android:id="@+id/call_user"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/call_user"
-            android:paddingTop="50dp"
-            android:paddingBottom="50dp"
+            android:src="@drawable/user_icon"
+            android:paddingVertical="60dp"
+            android:paddingHorizontal="5dp"
             android:layout_marginLeft="5dp"
             android:background="@drawable/call_border_left"
             app:layout_constraintTop_toBottomOf="@id/home_guidline7"
             app:layout_constraintStart_toStartOf="@id/home_guidline12"/>
 
         <ImageView
-            android:id="@+id/call_btn2"
-            android:layout_width="90dp"
+            android:id="@+id/call_other"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/call_user"
-            android:paddingTop="50dp"
-            android:paddingBottom="50dp"
+            android:src="@drawable/other_icon"
+            android:paddingVertical="60dp"
+            android:paddingHorizontal="5dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/call_border_right"
             app:layout_constraintTop_toBottomOf="@id/home_guidline7"

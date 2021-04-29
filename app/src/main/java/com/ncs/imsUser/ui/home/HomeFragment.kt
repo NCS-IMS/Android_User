@@ -16,7 +16,7 @@ import com.ncs.imsUser.GISManager.GetMylocation
 import com.ncs.imsUser.R
 import com.ncs.imsUser.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener{
+class HomeFragment : Fragment(), View.OnClickListener{
 
     private lateinit var homeViewModel: HomeViewModel
     lateinit var homeBinding: FragmentHomeBinding
@@ -32,26 +32,15 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener{
         homeBinding.lifecycleOwner = this
 
         getMylocation = GetMylocation()
-        homeBinding.callBtn.setOnClickListener(this)
-        homeBinding.callBtn.setOnLongClickListener(this)
+        homeBinding.callUser.setOnClickListener(this)
+        homeBinding.callOther.setOnClickListener(this)
         return homeBinding.root
     }
 
-    override fun onLongClick(v: View?): Boolean {
-        when(v?.id){
-            homeBinding.callBtn.id->{
-                var gps = getMylocation.getLocation(requireContext())
-                Log.e("longitude", gps.get("longitude").toString())
-                Log.e("latitude", gps.get("latitude").toString())
-                return true
-            }
-        }
-        return false
-    }
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.call_btn->{
+            homeBinding.callUser.id->{
                 isMe = true
                 var sympDialog = SymptomDialog(requireContext(), object:SymptomDialog.SymptomDialogListener{
                     override fun clickItem(state: String) {
@@ -61,6 +50,17 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener{
                 })
                 sympDialog.show(childFragmentManager, sympDialog.tag)
             }
+            homeBinding.callOther.id->{
+                isMe = false
+                var sympDialog = SymptomDialog(requireContext(), object:SymptomDialog.SymptomDialogListener{
+                    override fun clickItem(state: String) {
+                        var gps = getMylocation.getLocation(requireContext())
+                        homeViewModel.otherEmergencyCall(state, isMe, gps)
+                    }
+                })
+                sympDialog.show(childFragmentManager, sympDialog.tag)
+            }
         }
     }
+
 }
