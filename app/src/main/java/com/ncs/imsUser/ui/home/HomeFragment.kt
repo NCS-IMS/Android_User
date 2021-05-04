@@ -45,7 +45,9 @@ class HomeFragment : Fragment(), View.OnClickListener{
                 var sympDialog = SymptomDialog(requireContext(), object:SymptomDialog.SymptomDialogListener{
                     override fun clickItem(state: String) {
                         var gps = getMylocation.getLocation(requireContext())
-                        homeViewModel.myEmergencyCall(state, isMe, gps)
+                        homeViewModel.myCallMessage(state, isMe, gps).observe(viewLifecycleOwner, Observer {
+                            Log.e("state", it.toString())
+                        })
                     }
                 })
                 sympDialog.show(childFragmentManager, sympDialog.tag)
@@ -55,7 +57,7 @@ class HomeFragment : Fragment(), View.OnClickListener{
                 var sympDialog = SymptomDialog(requireContext(), object:SymptomDialog.SymptomDialogListener{
                     override fun clickItem(state: String) {
                         var gps = getMylocation.getLocation(requireContext())
-                        homeViewModel.otherEmergencyCall(state, isMe, gps)
+                        homeViewModel.otherCallMessage(state, isMe, gps)
                     }
                 })
                 sympDialog.show(childFragmentManager, sympDialog.tag)
