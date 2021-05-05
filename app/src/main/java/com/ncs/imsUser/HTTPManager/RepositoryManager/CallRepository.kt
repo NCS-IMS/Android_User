@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.ncs.imsUser.HTTPManager.DTOManager.PubicDTO
 import com.ncs.imsUser.HTTPManager.RetrofitInterface
 import com.ncs.imsUser.HTTPManager.Tools
-import com.ncs.imsUser.RetrofitAPI
+import com.ncs.imsUser.HTTPManager.RetrofitAPI
 import com.ncs.imsUser.SaveDataManager.UserInfoData
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,7 +15,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 class CallRepository(application: Application) {
-    private val retrofit : Retrofit = RetrofitAPI.getInstance(Tools().EMERGENCY_URL)
+    private var retrofit : Retrofit = RetrofitAPI.getInstance(Tools().EMERGENCY_URL)
     private val service = retrofit.create(RetrofitInterface::class.java)
     var userInfoData = UserInfoData(application)
 
@@ -36,7 +36,7 @@ class CallRepository(application: Application) {
                 resState.value = true
             }
             override fun onFailure(call: Call<PubicDTO>, t: Throwable) {
-                Log.d("errorssss", t.message.toString())
+                Log.d("error", t.message.toString())
                 resState.value = false
             }
         })

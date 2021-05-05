@@ -15,4 +15,7 @@ interface RetrofitInterface{
 
     @POST("/emergency")
     fun sendMyEmergency(@Body data: HashMap<String, String>): Call<PubicDTO>
+
+    @GET("/user/detail")
+    fun loadUserInfo(@Query("kakaoId") kakaoId: String): Call<UserDTO>
 }

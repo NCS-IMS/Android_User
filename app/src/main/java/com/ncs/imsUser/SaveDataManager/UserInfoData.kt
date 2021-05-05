@@ -13,19 +13,24 @@ class UserInfoData(context: Context) {
         editor.putString("USER_ID",userID)
         return editor.commit()
     }
-    fun setName(name : String):Boolean{
+    /*fun setName(name : String):Boolean{
         editor.putString("NAME",name)
         return editor.commit()
     }
     fun setPhone(phone : String):Boolean{
         editor.putString("PHONE",phone)
         return editor.commit()
-    }
+    }*/
     fun setEmail(email : String):Boolean{
         editor.putString("EMAIL",email)
         return editor.commit()
     }
-    fun setBirth(birth : String):Boolean{
+
+    fun setGender(gender : String):Boolean{
+        editor.putString("GENDER",gender)
+        return editor.commit()
+    }
+    /*fun setBirth(birth : String):Boolean{
         editor.putString("BIRTH",birth)
         return editor.commit()
     }
@@ -33,14 +38,10 @@ class UserInfoData(context: Context) {
         editor.putString("ADDR",addr)
         return editor.commit()
     }
-    fun setGender(gender : String):Boolean{
-        editor.putString("GENDER",gender)
-        return editor.commit()
-    }
     fun setBlood(blood : String):Boolean{
         editor.putString("BLOOD",blood)
         return editor.commit()
-    }
+    }*/
     fun setMedicine(medicine : String):Boolean{
         editor.putString("MEDICINE",medicine)
         return editor.commit()
@@ -56,12 +57,12 @@ class UserInfoData(context: Context) {
     fun getUserData():HashMap<String, String>{
         val userInfo = HashMap<String, String>()
         userInfo["USER_ID"] = userData.getString("USER_ID", "")
-        userInfo["NAME"] = userData.getString("NAME", "")
+        /*userInfo["NAME"] = userData.getString("NAME", "")
         userInfo["PHONE"] = userData.getString("PHONE", "")
         userInfo["BIRTH"] = userData.getString("BIRTH", "")
         userInfo["ADDR"] = userData.getString("ADDR", "")
+        userInfo["BLOOD"] = userData.getString("BLOOD", "")*/
         userInfo["GENDER"] = userData.getString("GENDER", "")
-        userInfo["BLOOD"] = userData.getString("BLOOD", "")
         userInfo["MEDICINE"] = userData.getString("MEDICINE", "")
         userInfo["HISTORY"] = userData.getString("HISTORY", "")
         userInfo["IMGURL"] = userData.getString("IMGURL", "")

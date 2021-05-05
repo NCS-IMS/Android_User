@@ -11,9 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.gson.GsonBuilder
@@ -35,19 +37,17 @@ import java.util.*
 class MypageFragment : Fragment, View.OnClickListener {
 
     var editorMode = false
-    companion object{
-        var first = false
-    }
+    var first = false
     private lateinit var mypageViewModel: MypageViewModel
     lateinit var mypageBinding: FragmentMypageBinding
     lateinit var userInfoData: UserInfoData
-    lateinit var userForm : Array<Editable>
-    lateinit var progressDialog:ProgressDialog
+    lateinit var userForm: Array<Editable>
+    lateinit var progressDialog: ProgressDialog
 
     constructor()
-    constructor(editorMode: Boolean, first: Boolean){
+    constructor(editorMode: Boolean, first: Boolean) {
         this.editorMode = editorMode
-        MypageFragment.first = first
+        this.first = first
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -62,7 +62,7 @@ class MypageFragment : Fragment, View.OnClickListener {
 
         userInfoData = UserInfoData(requireContext())
         loadUserInfo()
-        if(editorMode){
+        if (editorMode) {
             changeMode()
         }
         mypageBinding.phoneTxt.addTextChangedListener(PhoneNumberFormattingTextWatcher())
@@ -72,7 +72,8 @@ class MypageFragment : Fragment, View.OnClickListener {
         progressDialog = ProgressDialog(requireContext())
         return mypageBinding.root
     }
-    fun changeMode(){
+
+    fun changeMode() {
         mypageBinding.nameTxt.isEnabled = editorMode
         mypageBinding.phoneTxt.isEnabled = editorMode
         mypageBinding.birthTxt.isEnabled = editorMode
@@ -82,25 +83,27 @@ class MypageFragment : Fragment, View.OnClickListener {
         mypageBinding.bloodTypeTxt.isEnabled = editorMode
         mypageBinding.takingMedicineTxt.isEnabled = editorMode
         mypageBinding.historyTxt.isEnabled = editorMode
-        mypageBinding.editBtn.visibility = if(editorMode) View.GONE else View.VISIBLE
-        mypageBinding.saveBtn.visibility = if(editorMode) View.VISIBLE else View.GONE
+        mypageBinding.editBtn.visibility = if (editorMode) View.GONE else View.VISIBLE
+        mypageBinding.saveBtn.visibility = if (editorMode) View.VISIBLE else View.GONE
     }
 
-    fun loadUserInfo(){
+    fun loadUserInfo() {
         var user = userInfoData.getUserData()
-        var gender = if(user.get("GENDER")=="MALE" || user.get("GENDER")=="남성") "남성" else "여성"
-        mypageBinding.nameTxt.setText(user.get("NAME"))
-        mypageBinding.phoneTxt.setText(user.get("PHONE"))
-        mypageBinding.birthTxt.setText(user.get("BIRTH"))
-        mypageBinding.addrTxt.setText(user.get("ADDR"))
+        var gender = if (user.get("GENDER") == "MALE" || user.get("GENDER") == "남성") "남성" else "여성"
         mypageBinding.genderTxt.setText(gender)
-        mypageBinding.bloodTypeTxt.setText(user.get("BLOOD"))
         mypageBinding.takingMedicineTxt.setText(user.get("MEDICINE"))
         mypageBinding.historyTxt.setText(user.get("HISTORY"))
         Glide.with(requireContext()).load(user.get("IMGURL")).into(mypageBinding.profileImg)
+        mypageViewModel.loadUserData(user.get("USER_ID").toString()).observe(viewLifecycleOwner, {
+            mypageBinding.nameTxt.setText(it.name)
+            mypageBinding.phoneTxt.setText(it.phone)
+            mypageBinding.birthTxt.setText(it.birth)
+            mypageBinding.addrTxt.setText(it.address)
+            mypageBinding.bloodTypeTxt.setText(it.bloodType)
+        })
     }
 
-    fun checkFullText():Boolean{
+    fun checkFullText(): Boolean {
         userForm = arrayOf(
                 mypageBinding.nameTxt.text,
                 mypageBinding.phoneTxt.text,
@@ -111,37 +114,30 @@ class MypageFragment : Fragment, View.OnClickListener {
                 mypageBinding.takingMedicineTxt.text,
                 mypageBinding.historyTxt.text
         )
-        for(value in userForm){
-            if(value.isEmpty()) return false
+        for (value in userForm) {
+            if (value.isEmpty()) return false
         }
         return true
     }
 
-    fun saveUserData(){
-        userInfoData.setName(mypageBinding.nameTxt.text.toString())
-        userInfoData.setPhone(mypageBinding.phoneTxt.text.toString())
-        userInfoData.setBirth(mypageBinding.birthTxt.text.toString())
-        userInfoData.setAddr(mypageBinding.addrTxt.text.toString())
-        userInfoData.setGender(mypageBinding.genderTxt.text.toString())
-        userInfoData.setBlood(mypageBinding.bloodTypeTxt.text.toString())
+    fun saveUserData() {
         userInfoData.setMedicine(mypageBinding.takingMedicineTxt.text.toString())
         userInfoData.setHistory(mypageBinding.historyTxt.getText().toString())
     }
 
-    fun showDialog(title: String, message: String){
+    fun showDialog(title: String, message: String) {
         var dialog = AlertDialog.Builder(requireContext())
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("확인", object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {}
-            }).show()
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("확인", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, which: Int) {}
+                }).show()
     }
 
 
-
     override fun onClick(v: View?) {
-        this.editorMode = !editorMode
-        when(v?.id){
+        this.editorMode = !this.editorMode
+        when (v?.id) {
             mypageBinding.editBtn.id -> {
                 changeMode()
             }
@@ -150,23 +146,45 @@ class MypageFragment : Fragment, View.OnClickListener {
                 progressDialog.setCancelable(false)
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
                 progressDialog.show()
-                if (checkFullText()&&first) {
-                    saveUserData()
-                    changeMode()
-                    mypageViewModel.InsertUserData(userForm, progressDialog)
-                }else if(checkFullText()&&!first){
-                    Log.e("sf", "sdfsd")
-                    saveUserData()
-                    changeMode()
-                    mypageViewModel.UpdateUserData(userForm, progressDialog)
-                }else{
+                if (checkFullText() && first) {
+                    mypageViewModel.insertUserData(userForm).observe(viewLifecycleOwner, {
+                        if (it == true) {
+                            Log.e("dfsdfsdfdsfsdfs", editorMode.toString())
+                            changeMode()
+                            saveUserData()
+                            first = !first
+                        } else {
+                            mypageViewModel.responseMessage().observe(viewLifecycleOwner, {
+                                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                            })
+                        }
+                        progressDialog.dismiss()
+                    })
+                } else if (checkFullText() && !first) {
+                    mypageViewModel.updateUserData(userForm).observe(viewLifecycleOwner, {
+                        if (it == true) {
+                            changeMode()
+                            saveUserData()
+                        } else {
+                            mypageViewModel.responseMessage().observe(viewLifecycleOwner, {
+                                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                            })
+                        }
+                        progressDialog.dismiss()
+                    })
+                } else {
                     progressDialog.dismiss()
                     showDialog("빈칸을 채워주세요", "당장용>.<")
                 }
             }
             mypageBinding.birthTxt.id -> {
                 DatePickerDialog(requireContext(), { view, year, month, dayOfMonth ->
-                    mypageBinding.birthTxt.setText("${year}.${month+1}.${dayOfMonth}")
+                    var month = Integer.toString(month +1)
+                    var day = Integer.toString(dayOfMonth)
+                    if(Integer.parseInt(month)<10) month = "0${month}"
+                    if(Integer.parseInt(day)<10) day = "0${day}"
+
+                    mypageBinding.birthTxt.setText("${year}-${month}-${day}")
                 }, Calendar.getInstance()[Calendar.YEAR], Calendar.getInstance()[Calendar.MONTH], Calendar.getInstance()[Calendar.DATE]).show()
             }
         }
