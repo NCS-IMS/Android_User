@@ -4,23 +4,47 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.ncs.imsUser.MainActivity
 import com.ncs.imsUser.R
+import com.ncs.imsUser.databinding.FragmentFindroadBinding
 
-class FindRoadFragment : Fragment() {
+
+class FindRoadFragment : Fragment(), View.OnClickListener{
 
     private lateinit var findRoadViewModel: FindRoadViewModel
+    lateinit var findroadBinding: FragmentFindroadBinding
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        findRoadViewModel =
-                ViewModelProvider(this).get(FindRoadViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_findroad, container, false)
+        findRoadViewModel = ViewModelProvider(this).get(FindRoadViewModel::class.java)
+        findroadBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_findroad,
+            container,
+            false
+        )
 
-        return root
+        findroadBinding.findViewModel = findRoadViewModel
+        findroadBinding.lifecycleOwner = this
+
+        findroadBinding.hospitalBtn.setOnClickListener(this)
+
+        return findroadBinding.root
+    }
+
+    override fun onClick(v: View?) {
+        var fragment : Fragment
+        when(v?.id){
+            findroadBinding.hospitalBtn.id -> {
+                fragment = MapFragment()
+                (activity as MainActivity?)!!.replaceFragment(fragment)
+            }
+        }
     }
 }

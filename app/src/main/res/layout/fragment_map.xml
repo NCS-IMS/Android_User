@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="mapViewModel"
+            type="com.ncs.imsUser.ui.findRoad.MapViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backColor"
+        android:clickable="true"
+        tools:context=".ui.findRoad.MapFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/fragment_boder"
+            android:layout_above="@id/tempView2">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/map_guidline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.06"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/map_guidline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.03"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/map_guidline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.08"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/map_guidline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.96"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/map_guidline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.97"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="병원 찾기"
+                android:textSize="17dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:paddingVertical="5dp"
+                app:layout_constraintStart_toStartOf="@id/map_guidline2"
+                app:layout_constraintBottom_toTopOf="@id/map_guidline1"/>
+
+            <RelativeLayout
+                android:id="@+id/map_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/map_guidline3"
+                app:layout_constraintBottom_toTopOf="@id/map_guidline4"
+                app:layout_constraintStart_toStartOf="@id/map_guidline2"
+                app:layout_constraintEnd_toEndOf="@id/map_guidline5"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tempView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+</layout>

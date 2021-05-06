@@ -40,6 +40,9 @@
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:label="@string/app_name"></activity>
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="dafbb22341109472fe400f2f6a9ff0bc"/>
     </application>
 
 </manifest>

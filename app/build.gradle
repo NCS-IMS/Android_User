@@ -11,7 +11,7 @@ android {
         applicationId "com.ncs.imsUser"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 7
+        versionCode 8
         versionName "1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -69,6 +69,10 @@ dependencies {
 
     //로티
     implementation 'com.airbnb.android:lottie:3.7.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //kakao Map Api Service
+    implementation files('libs/libDaumMapAndroid.jar')
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

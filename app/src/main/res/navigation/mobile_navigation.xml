@@ -22,4 +22,10 @@
         android:name="com.ncs.imsUser.ui.notifications.MypageFragment"
         android:label="@string/title_myPage"
         tools:layout="@layout/fragment_mypage" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.ncs.imsUser.ui.findRoad.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map"/>
+
 </navigation>

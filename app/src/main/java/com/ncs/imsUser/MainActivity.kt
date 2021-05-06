@@ -7,6 +7,8 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -17,6 +19,7 @@ import com.ncs.imsUser.ui.notifications.MypageFragment
 class MainActivity : AppCompatActivity() {
 
     lateinit var navView : BottomNavigationView
+    lateinit var fragmentTransaction: FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,12 @@ class MainActivity : AppCompatActivity() {
                     navView.menu.get(2).isChecked = true
                 }
             }).show()
+    }
+
+    fun replaceFragment(fragment: Fragment){
+        var fragmentManager = supportFragmentManager
+        var fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.nav_host_fragment, fragment).commit()
     }
 
 }
