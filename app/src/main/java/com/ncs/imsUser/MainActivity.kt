@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }).show()
     }
 
-    fun replaceFragment(fragment: Fragment){
+    fun replaceFragment(fragment: Fragment){  //프라그먼트 교체 하기 위한 메서드
         var fragmentManager = supportFragmentManager
         var fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.nav_host_fragment, fragment).commit()
