@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.ncs.imsUser.Dialog.SymptomDialogManager.SymptomDialog
 import com.ncs.imsUser.MainActivity
 import com.ncs.imsUser.R
 import com.ncs.imsUser.databinding.FragmentFindroadBinding
@@ -42,8 +43,13 @@ class FindRoadFragment : Fragment(), View.OnClickListener{
         var fragment : Fragment
         when(v?.id){
             findroadBinding.hospitalBtn.id -> {
-                fragment = MapFragment()
-                (activity as MainActivity?)!!.replaceFragment(fragment)
+                var sympDialog = SymptomDialog(requireContext(), object : SymptomDialog.SymptomDialogListener{
+                    override fun clickItem(state: String) {
+                        fragment = MapFragment()
+                        (activity as MainActivity?)!!.replaceFragment(fragment)
+                    }
+                }, 1)
+                sympDialog.show(childFragmentManager, sympDialog.tag)
             }
         }
     }

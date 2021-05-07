@@ -13,9 +13,7 @@ import com.ncs.imsUser.R
 import com.ncs.imsUser.databinding.SympCardBinding
 import com.ncs.imsUser.databinding.SymptomBinding
 
-class SymptomDialog(context: Context, var symptomDialogListener: SymptomDialogListener): DialogFragment() {
-
-
+class SymptomDialog(context: Context, var symptomDialogListener: SymptomDialogListener, var use: Int): DialogFragment() {
 
     lateinit var binding: SymptomBinding
     lateinit var sympCardbinding: SympCardBinding
@@ -23,7 +21,7 @@ class SymptomDialog(context: Context, var symptomDialogListener: SymptomDialogLi
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.symptom, container, false)
         sympCardbinding = DataBindingUtil.inflate(inflater, R.layout.symp_card, container, false)
-        sympList = SymptomListMaker(0)
+        sympList = SymptomListMaker(use)
         var adapter = SymptomAdapter(requireContext(),sympList){symptomData ->
             symptomDialogListener.clickItem(symptomData.sympName)
             dismiss()
@@ -47,6 +45,18 @@ class SymptomDialog(context: Context, var symptomDialogListener: SymptomDialogLi
                     SymptomData(R.drawable.head_ache, "두통"),
                     SymptomData(R.drawable.pregnant, "산통"),
                     SymptomData(R.drawable.question, "알수없음")
+                )
+            }
+            1->{
+                makeList = arrayListOf<SymptomData>(
+                        SymptomData(R.drawable.anatomy, "내과"),
+                        SymptomData(R.drawable.tooth, "치과"),
+                        SymptomData(R.drawable.skeleton, "정형외과"),
+                        SymptomData(R.drawable.ear, "이비인후과"),
+                        SymptomData(R.drawable.pregnant, "산부인과"),
+                        SymptomData(R.drawable.skin, "피부과"),
+                        SymptomData(R.drawable.brain, "신경외과"),
+                        SymptomData(R.drawable.eye, "안과")
                 )
             }
         }

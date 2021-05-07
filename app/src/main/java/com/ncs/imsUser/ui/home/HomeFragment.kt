@@ -49,7 +49,7 @@ class HomeFragment : Fragment(), View.OnClickListener{
                             Log.e("state", it.toString())
                         })
                     }
-                })
+                }, 0)
                 sympDialog.show(childFragmentManager, sympDialog.tag)
             }
             homeBinding.callOther.id->{
@@ -61,7 +61,7 @@ class HomeFragment : Fragment(), View.OnClickListener{
                             Log.e("state", it.toString())
                         })
                     }
-                })
+                }, 0)
                 sympDialog.show(childFragmentManager, sympDialog.tag)
             }
         }
