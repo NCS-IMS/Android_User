@@ -14,14 +14,12 @@ import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 
-class MapFragment: Fragment() {
+class MapFragment(find : String): Fragment() {
     private lateinit var mapViewModel: MapViewModel
     lateinit var mapBinding: FragmentMapBinding
     lateinit var gps : HashMap<String, Double>
     lateinit var marker : MapPOIItem
     lateinit var map_view: MapView
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         mapViewModel = ViewModelProvider(requireActivity()).get(MapViewModel::class.java)
@@ -33,17 +31,15 @@ class MapFragment: Fragment() {
         gps = GetMylocation().getLocation(requireContext())
 
         map_view = MapView(requireActivity())
-
         mapBinding.mapView.addView(map_view)
-        marker = MapPOIItem()
-        var mapPoint = MapPoint.mapPointWithGeoCoord(gps.get("latitude")!!, gps.get("longitude")!!)
 
-        setCurrentLocation(mapPoint)
+        setCurrentLocation()
 
         return mapBinding.root
     }
 
-    fun setCurrentLocation(mapPoint : MapPoint){
+    fun setCurrentLocation(){
+        var mapPoint = MapPoint.mapPointWithGeoCoord(gps.get("latitude")!!, gps.get("longitude")!!)
         map_view.setMapCenterPointAndZoomLevel(mapPoint, 5, true)
         map_view.zoomIn(true)
         map_view.zoomOut(true)

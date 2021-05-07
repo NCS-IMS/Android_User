@@ -45,7 +45,7 @@ class FindRoadFragment : Fragment(), View.OnClickListener{
             findroadBinding.hospitalBtn.id -> {
                 var sympDialog = SymptomDialog(requireContext(), object : SymptomDialog.SymptomDialogListener{
                     override fun clickItem(state: String) {
-                        fragment = MapFragment()
+                        fragment = MapFragment(state)
                         (activity as MainActivity?)!!.replaceFragment(fragment)
                     }
                 }, 1)
