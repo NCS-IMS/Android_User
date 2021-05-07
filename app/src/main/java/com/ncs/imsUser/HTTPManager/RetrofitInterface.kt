@@ -1,5 +1,6 @@
 package com.ncs.imsUser.HTTPManager
 
+import com.ncs.imsUser.HTTPManager.DTOManager.FindDTO
 import com.ncs.imsUser.HTTPManager.DTOManager.PubicDTO
 import com.ncs.imsUser.HTTPManager.DTOManager.UserDTO
 import retrofit2.Call
@@ -18,4 +19,7 @@ interface RetrofitInterface{
 
     @GET("/user/detail")
     fun loadUserInfo(@Query("kakaoId") kakaoId: String): Call<UserDTO>
+
+    @POST("/find/hospital")
+    fun getHospitalLocation(@Body data: HashMap<String, String>): Call<FindDTO>
 }

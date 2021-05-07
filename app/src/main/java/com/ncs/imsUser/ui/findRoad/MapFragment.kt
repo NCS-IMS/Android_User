@@ -1,6 +1,8 @@
 package com.ncs.imsUser.ui.findRoad
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ncs.imsUser.GISManager.GetMylocation
+import com.ncs.imsUser.MainActivity
 import com.ncs.imsUser.R
 import com.ncs.imsUser.databinding.FragmentMapBinding
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 
-class MapFragment(find : String): Fragment() {
+class MapFragment(var type: String, var option : String): Fragment(){
     private lateinit var mapViewModel: MapViewModel
     lateinit var mapBinding: FragmentMapBinding
     lateinit var gps : HashMap<String, Double>
@@ -32,8 +35,13 @@ class MapFragment(find : String): Fragment() {
 
         map_view = MapView(requireActivity())
         mapBinding.mapView.addView(map_view)
-
+        mapBinding.findType.text = "$type 찾기"
         setCurrentLocation()
+        mapViewModel.findLocation(type, option, gps.get("latitude")!!, gps.get("longitude")!!).observe(viewLifecycleOwner, {
+            for(i in it){
+                Log.e("host", i.address_name)
+            }
+        })
 
         return mapBinding.root
     }

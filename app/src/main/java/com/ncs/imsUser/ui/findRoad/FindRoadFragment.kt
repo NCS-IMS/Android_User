@@ -17,7 +17,7 @@ class FindRoadFragment : Fragment(), View.OnClickListener{
 
     private lateinit var findRoadViewModel: FindRoadViewModel
     lateinit var findroadBinding: FragmentFindroadBinding
-
+    var type = arrayListOf("병원", "약국")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +35,7 @@ class FindRoadFragment : Fragment(), View.OnClickListener{
         findroadBinding.lifecycleOwner = this
 
         findroadBinding.hospitalBtn.setOnClickListener(this)
-
+        findroadBinding.permacyBtn.setOnClickListener(this)
         return findroadBinding.root
     }
 
@@ -45,11 +45,15 @@ class FindRoadFragment : Fragment(), View.OnClickListener{
             findroadBinding.hospitalBtn.id -> {
                 var sympDialog = SymptomDialog(requireContext(), object : SymptomDialog.SymptomDialogListener{
                     override fun clickItem(state: String) {
-                        fragment = MapFragment(state)
+                        fragment = MapFragment(type[0], state)
                         (activity as MainActivity?)!!.replaceFragment(fragment)
                     }
                 }, 1)
                 sympDialog.show(childFragmentManager, sympDialog.tag)
+            }
+            findroadBinding.permacyBtn.id ->{
+                fragment = MapFragment(type[1], "")
+                (activity as MainActivity?)!!.replaceFragment(fragment)
             }
         }
     }
