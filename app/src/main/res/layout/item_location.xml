@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="5dp"
+        android:elevation="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/item_location_guideline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.15"/>
+
+                <ImageView
+                    android:id="@+id/pinImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/location_pin"
+                    android:paddingHorizontal="5dp"
+                    app:layout_constraintEnd_toEndOf="@id/item_location_guideline1"
+                    app:layout_constraintTop_toTopOf="@id/locationTitle"/>
+
+                <TextView
+                    android:id="@+id/locationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sdfsdf"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:maxLength="20"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/pinImg"
+                    app:layout_constraintStart_toStartOf="@id/item_location_guideline1"/>
+
+                <TextView
+                    android:id="@+id/addressTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:maxLength="20"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    app:layout_constraintTop_toBottomOf="@id/locationTitle"
+                    app:layout_constraintStart_toStartOf="@id/item_location_guideline1"
+                    android:text="충남 천안시 서북구"/>
+
+                <TextView
+                    android:id="@+id/storePhoneTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:maxLength="20"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    app:layout_constraintTop_toBottomOf="@id/addressTxt"
+                    app:layout_constraintStart_toStartOf="@id/item_location_guideline1"
+                    android:text="0410000"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="10dp">
+                <ImageView
+                    android:id="@+id/roadImg"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/road_icon"/>
+
+                <TextView
+                    android:id="@+id/direction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/roadImg"
+                    android:layout_centerHorizontal="true"
+                    android:text="500M"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

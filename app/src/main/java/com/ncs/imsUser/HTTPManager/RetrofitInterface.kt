@@ -22,4 +22,7 @@ interface RetrofitInterface{
 
     @POST("/find/hospital")
     fun getHospitalLocation(@Body data: HashMap<String, String>): Call<FindDTO>
+
+    @POST("/find/pharmacy")
+    fun getPharmacyLocation(@Body data: HashMap<String, String>): Call<FindDTO>
 }

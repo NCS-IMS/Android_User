@@ -27,18 +27,33 @@ class MapLoadRepository {
             info.put("option", option)
 
         var LocationData = MutableLiveData<List<FindData>>()
-        service.getHospitalLocation(info).enqueue(object : Callback<FindDTO>{
-            override fun onResponse(call: Call<FindDTO>, response: Response<FindDTO>) {
-                if(response.code() == 200){
-                    LocationData.value = response.body()!!.result
-                }else{
-                    message.value = response.body()!!.message
+        if(type == "병원"){
+            service.getHospitalLocation(info).enqueue(object : Callback<FindDTO>{
+                override fun onResponse(call: Call<FindDTO>, response: Response<FindDTO>) {
+                    if(response.code() == 200){
+                        LocationData.value = response.body()!!.result
+                    }else{
+                        message.value = response.body()!!.message
+                    }
                 }
-            }
-            override fun onFailure(call: Call<FindDTO>, t: Throwable) {
-                Log.d("error", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<FindDTO>, t: Throwable) {
+                    Log.d("error", t.message.toString())
+                }
+            })
+        }else{
+            service.getPharmacyLocation(info).enqueue(object : Callback<FindDTO>{
+                override fun onResponse(call: Call<FindDTO>, response: Response<FindDTO>) {
+                    if(response.code() == 200){
+                        LocationData.value = response.body()!!.result
+                    }else{
+                        message.value = response.body()!!.message
+                    }
+                }
+                override fun onFailure(call: Call<FindDTO>, t: Throwable) {
+                    Log.d("error", t.message.toString())
+                }
+            })
+        }
         return LocationData
     }
 }
