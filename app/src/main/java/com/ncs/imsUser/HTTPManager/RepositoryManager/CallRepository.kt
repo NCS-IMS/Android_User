@@ -19,6 +19,7 @@ class CallRepository(application: Application) {
     private val service = retrofit.create(RetrofitInterface::class.java)
     var userInfoData = UserInfoData(application)
 
+    //응급 호출 서버 요청 구간
     fun myEmergencyCall(state : String, isMe: Boolean, gps : HashMap<String, Double>):LiveData<Boolean>{
         var resState = MutableLiveData<Boolean>()
         var info = hashMapOf<String, String>(
@@ -28,7 +29,8 @@ class CallRepository(application: Application) {
                 "latitude" to gps["latitude"].toString(),
                 "longitude" to gps["longitude"].toString(),
                 "medicine" to userInfoData.getUserData().get("MEDICINE").toString(),
-                "anamnesis" to userInfoData.getUserData().get("HISTORY").toString()
+                "anamnesis" to userInfoData.getUserData().get("HISTORY").toString(),
+                "user_addr" to userInfoData.getUserData().get("ADDR").toString()
         )
         service.sendMyEmergency(info).enqueue(object : Callback<PubicDTO> {
             override fun onResponse(call: Call<PubicDTO>, response: Response<PubicDTO>) {
@@ -43,6 +45,7 @@ class CallRepository(application: Application) {
         return resState
     }
 
+    //제 3자가 호출할 때의 서버 요청할 때 사용
     fun otherEmergencyCall(state : String, isMe: Boolean, gps : HashMap<String, Double>):LiveData<Boolean>{
         var resState = MutableLiveData<Boolean>()
         var info = hashMapOf<String, String>(

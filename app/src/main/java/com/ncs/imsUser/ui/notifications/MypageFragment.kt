@@ -122,7 +122,8 @@ class MypageFragment : Fragment, View.OnClickListener {
 
     fun saveUserData() {
         userInfoData.setMedicine(mypageBinding.takingMedicineTxt.text.toString())
-        userInfoData.setHistory(mypageBinding.historyTxt.getText().toString())
+        userInfoData.setHistory(mypageBinding.historyTxt.text.toString())
+        userInfoData.setAddr(mypageBinding.addrTxt.text.toString())
     }
 
     fun showDialog(title: String, message: String) {
@@ -146,7 +147,7 @@ class MypageFragment : Fragment, View.OnClickListener {
                 progressDialog.setCancelable(false)
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
                 progressDialog.show()
-                if (checkFullText() && first) {
+                if (checkFullText() && first) { //처음 저장 할 때 사용하는 이벤트
                     mypageViewModel.insertUserData(userForm).observe(viewLifecycleOwner, {
                         if (it == true) {
                             Log.e("dfsdfsdfdsfsdfs", editorMode.toString())
@@ -160,7 +161,7 @@ class MypageFragment : Fragment, View.OnClickListener {
                         }
                         progressDialog.dismiss()
                     })
-                } else if (checkFullText() && !first) {
+                } else if (checkFullText() && !first) { //이후 업데이트 할 때 사용하는 이벤트
                     mypageViewModel.updateUserData(userForm).observe(viewLifecycleOwner, {
                         if (it == true) {
                             changeMode()

@@ -34,14 +34,16 @@ class UserInfoData(context: Context) {
         editor.putString("BIRTH",birth)
         return editor.commit()
     }
-    fun setAddr(addr : String):Boolean{
-        editor.putString("ADDR",addr)
-        return editor.commit()
-    }
     fun setBlood(blood : String):Boolean{
         editor.putString("BLOOD",blood)
         return editor.commit()
     }*/
+
+    fun setAddr(addr : String):Boolean{
+        editor.putString("ADDR",addr)
+        return editor.commit()
+    }
+
     fun setMedicine(medicine : String):Boolean{
         editor.putString("MEDICINE",medicine)
         return editor.commit()
@@ -60,8 +62,8 @@ class UserInfoData(context: Context) {
         /*userInfo["NAME"] = userData.getString("NAME", "")
         userInfo["PHONE"] = userData.getString("PHONE", "")
         userInfo["BIRTH"] = userData.getString("BIRTH", "")
-        userInfo["ADDR"] = userData.getString("ADDR", "")
         userInfo["BLOOD"] = userData.getString("BLOOD", "")*/
+        userInfo["ADDR"] = userData.getString("ADDR", "")
         userInfo["GENDER"] = userData.getString("GENDER", "")
         userInfo["MEDICINE"] = userData.getString("MEDICINE", "")
         userInfo["HISTORY"] = userData.getString("HISTORY", "")
