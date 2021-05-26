@@ -178,7 +178,7 @@ class MypageFragment : Fragment, View.OnClickListener {
                     showDialog("빈칸을 채워주세요", "당장용>.<")
                 }
             }
-            mypageBinding.birthTxt.id -> {
+            mypageBinding.birthTxt.id -> { //생일입력 다이얼로그
                 DatePickerDialog(requireContext(), { view, year, month, dayOfMonth ->
                     var month = Integer.toString(month +1)
                     var day = Integer.toString(dayOfMonth)

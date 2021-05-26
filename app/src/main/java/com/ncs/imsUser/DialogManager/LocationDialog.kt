@@ -47,7 +47,7 @@ class LocationDialog(var type: String, var mcontext: Context, var findLoadList: 
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.addCategory(Intent.CATEGORY_DEFAULT)
                 intent.data = Uri.parse("market://details?id=com.locnall.KimGiSa")
-                startActivity(intent);
+                startActivity(intent)
             }
         }
         val linearManger = LinearLayoutManager(mcontext)
