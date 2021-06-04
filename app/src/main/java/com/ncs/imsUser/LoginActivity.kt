@@ -23,6 +23,7 @@ import java.security.NoSuchAlgorithmException
 class LoginActivity : AppCompatActivity() {
     lateinit var userData: UserInfoData
     var callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        Log.e("error?","sf")
         if(error != null){
             when{
                 error.toString() == AuthErrorCause.AccessDenied.toString() -> {
@@ -54,8 +55,9 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-        else if (token != null) {
+        if (token != null) {
             UserApiClient.instance.me { user, error ->
+                Log.e("dsfsd","sdfds")
                 if (error != null) {
                     Log.e("Request Fail", "사용자 정보 요청 실패", error)
                 }
@@ -91,10 +93,13 @@ class LoginActivity : AppCompatActivity() {
         userData = UserInfoData(this)
 
         loginBinding.kakaoLogin.setOnClickListener {
-            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
-                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
-            } else {
-                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+            UserApiClient.instance.run {
+                if(isKakaoTalkLoginAvailable(this@LoginActivity)){
+                    loginWithKakaoTalk(this@LoginActivity, callback = callback)
+                }else{
+                    Log.e("hello", "world")
+                    loginWithKakaoAccount(this@LoginActivity, callback = callback)
+                }
             }
         }
     }
