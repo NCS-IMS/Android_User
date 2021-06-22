@@ -1,5 +1,9 @@
 package com.ncs.imsUser.ui.home
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,6 +51,7 @@ class HomeFragment : Fragment(), View.OnClickListener{
                         var gps = getMylocation.getLocation(requireContext())
                         homeViewModel.myCallMessage(state, isMe, gps).observe(viewLifecycleOwner, Observer {
                             Log.e("state", it.toString())
+                            WebRTCDialog("구조사 연결", "화상으로 구조사와 통화 하시겠습니까?")
                         })
                     }
                 }, 0)
@@ -59,12 +64,26 @@ class HomeFragment : Fragment(), View.OnClickListener{
                         var gps = getMylocation.getLocation(requireContext())
                         homeViewModel.otherCallMessage(state, isMe, gps).observe(viewLifecycleOwner, {
                             Log.e("state", it.toString())
+                            WebRTCDialog("구조사 연결", "화상으로 구조사와 통화 하시겠습니까?")
                         })
                     }
                 }, 0)
                 sympDialog.show(childFragmentManager, sympDialog.tag)
             }
         }
+    }
+
+    fun WebRTCDialog(title : String, content : String){
+        AlertDialog.Builder(requireContext())
+                .setTitle(title)
+                .setMessage(content)
+                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://soonyoung.myds.me:43044/join/1"))
+                    intent.setPackage("com.android.chrome")
+                    startActivity(intent)
+                })
+                .setNegativeButton("취소",null)
+                .show()
     }
 
 }
